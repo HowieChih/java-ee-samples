@@ -65,12 +65,12 @@ public class HelloWorldServlet extends HttpServlet {
         // if override init funcation, must call super.init(config),
         // otherwise, you shall get NULL with getServletConfig().
         super.init(config);
-        System.out.println("Servlet初始化");
+        System.out.println(config.getServletName() + "初始化");
     }
 
     @Override
     public void destroy() {
         super.destroy();
-        System.out.println("Servlet销毁");
+        System.out.println("HelloWorld Servlet销毁");
     }
 }

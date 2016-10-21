@@ -14,4 +14,9 @@
     <filter-name>helloWorldFilter</filter-name>
     <url-pattern />
   </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>dispatcherFilter</filter-name>
+    <url-pattern />
+  </filter-mapping>
 </web-app>
