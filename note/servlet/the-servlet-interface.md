@@ -34,3 +34,32 @@ It is recommended that a developer take other means to resolve those issues inst
 ## Servlet Life Cycle
 
 A servlet is managed through a well defined life cycle that defines how it is **loaded and instantiated**, is **initialized**, **handles requests from clients**, and is **taken out of service**. This life cycle is expressed in the API by the ``init``, ``service``, and ``destroy`` methods of the javax.servlet.Servlet interface that all servlets must implement directly or indirectly through the GenericServlet or HttpServlet abstract classes.
+
+###  Loading and Instantiation
+
+The servlet container is responsible for loading and instantiating servlets. **The loading and instantiation can occur when the container is started, or delayed until the container determines the servlet is needed to service a request**.
+
+When the servlet engine is started, needed servlet classes must be located by the servlet container. The servlet container loads the servlet class using normal Java class loading facilities. After loading the ``Servlet`` class, the container instantiates it for use.
+
+### Initialization
+
+After the servlet object is instantiated, the container must initialize the servlet before it can handle requests from clients. 
+
+**TO**：Initialization is provided so that a servlet can read persistent configuration data, initialize costly resources (such as JDBC API-based connections), and perform other one-time activities.
+
+**Way to initialize**: calling the ``init`` method of the ``Servlet`` interface with a unique (per servlet declaration) object implementing the ServletConfig interface.
+
+**ServletConfig**: 
+- to access name-value initialization parameters from the Web application's configuration information. 
+- also gives the servlet access to an object (implementing the ServletContext) that describes the servlet's runtime environment.
+
+#### Error Conditons on Initialization
+
+1. during initialization, the servlet instance can throw an ``UnavailableException`` or a ``ServletException``. 
+2. In this case, the servlet must not be placed into active service and must be released by the container.
+3. The ``destroy`` method is not called as it is considered unsuccessful initialization.
+4. 异常发生后，Servlet容器可能会重新实例化和初始化该servlet。重新实例化和初始化的条件：异常是UnavailableException``，并且Servlet容器等待的时间过了该异常指定的该Servlet最短的不可用时间。
+
+#### Tool Considerations
+
+工具因素 - 当工具（注：根据笔者的理解，这个工具可能是应用服务器的某些检查工具，通常是验证应用的合法性和完整性）加载和内省（introspect）一个web应用时，它可能加载和内省该应用中的类，这个行为将触发那些类的静态初始方法被执行。因此，开发者不能假定Servlet处于活动的容器运行状态（active container runtime）直到它的init方法被调用后。比如Servlet不建议在它的静态（类）方法被调用时建立数据库连接或者连接EJB容器。
