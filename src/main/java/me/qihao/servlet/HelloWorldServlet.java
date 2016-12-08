@@ -32,7 +32,9 @@ public class HelloWorldServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = resp.getWriter()) {
-            // when first call request.getSession(), session will create
+            // 当第一次调用request.getSession()时，服务器会检查请求中是否包含jsessionid，
+            // 如果未包含，创建一个新的。
+            // 如果包含，服务器会检查该jsessionid是否存在在服务器维护的数据结构内，如果存在，直接使用，不存在，创建新的。
             req.getSession();
 
             out.println("<html>");
