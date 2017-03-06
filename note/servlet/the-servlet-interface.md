@@ -58,7 +58,7 @@ After the servlet object is instantiated, the container must initialize the serv
 1. during initialization, the servlet instance can throw an ``UnavailableException`` or a ``ServletException``. 
 2. In this case, the servlet must not be placed into active service and must be released by the container.
 3. The ``destroy`` method is not called as it is considered unsuccessful initialization.
-4. 异常发生后，Servlet容器可能会重新实例化和初始化该servlet。重新实例化和初始化的条件：异常是UnavailableException``，并且Servlet容器等待的时间过了该异常指定的该Servlet最短的不可用时间。
+4. 异常发生后，Servlet容器可能会重新实例化和初始化该servlet。重新实例化和初始化的条件：异常是``UnavailableException``，并且Servlet容器等待的时间过了该异常指定的该Servlet最短的不可用时间。
 
 #### Tool Considerations
 

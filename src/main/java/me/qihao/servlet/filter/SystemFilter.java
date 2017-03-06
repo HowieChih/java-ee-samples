@@ -22,7 +22,8 @@ import java.io.IOException;
         initParams = {
                 @WebInitParam(name = "sysParamVersion", value = "1.0"),
                 @WebInitParam(name = "sysParamEnv", value = "dev")
-        }
+        },
+        asyncSupported = true
 )
 public class SystemFilter implements Filter {
     @Override
