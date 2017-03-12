@@ -13,8 +13,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 
-@WebServlet(value = "async", asyncSupported = true)
+@WebServlet(name = "asyncServlet", urlPatterns = "/async", asyncSupported = true)
 public class AsyncServlet extends HttpServlet{
+
+    private static final long serialVersionUID = 3573378988906157137L;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -23,7 +25,7 @@ public class AsyncServlet extends HttpServlet{
         out.println("进入Servlet的时间：" + new Date() + ".");
         out.flush();
 
-        AsyncContext ctx = req.getAsyncContext();
+        AsyncContext ctx = req.startAsync();
         new Thread(new LongtimeService(ctx)).start();
 
         out.println("结束Servlet的时间：" + new Date() + ".");

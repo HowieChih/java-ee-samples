@@ -18,7 +18,7 @@ public class LongtimeService implements Runnable {
     public void run() {
         try {
             // 模拟该业务方法需要5s
-            Thread.sleep(50000);
+            Thread.sleep(5000);
             PrintWriter out = ctx.getResponse().getWriter();
             out.println("业务处理完毕的时间：" + new Date() + ".");
             out.flush();

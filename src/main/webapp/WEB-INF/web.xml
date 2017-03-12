@@ -1,13 +1,6 @@
 <web-app>
     <display-name>Archetype Created Web Application</display-name>
 
-    <!-- 测试async时注释掉
-
-    <filter-mapping>
-        <filter-name>systemFilter</filter-name>
-        <url-pattern/>
-    </filter-mapping>
-
     <filter-mapping>
         <filter-name>helloWorldFilter</filter-name>
         <url-pattern/>
@@ -18,9 +11,8 @@
         <url-pattern/>
     </filter-mapping>
 
-    -->
 
- <!--   <servlet>
+    <servlet>
         <servlet-name>nonAnnotationServlet</servlet-name>
         <servlet-class>me.qihao.servlet.NonAnnotationServlet</servlet-class>
     </servlet>
@@ -36,7 +28,7 @@
     <servlet-mapping>
         <servlet-name>nonAnnotationServlet2</servlet-name>
         <url-pattern>/non-annotation2</url-pattern>
-    </servlet-mapping>-->
+    </servlet-mapping>
     
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
