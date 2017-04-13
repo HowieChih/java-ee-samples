@@ -12,8 +12,8 @@ public class EmailService implements Runnable{
     }
 
     private void send(String address) throws InterruptedException {
-        // 假设邮件发送程序需要5s
-        Thread.sleep(5000);
+        // 假设邮件发送程序需要3s
+        Thread.sleep(3000);
         logger.info("email successfully send to: " + address);
     }
 
