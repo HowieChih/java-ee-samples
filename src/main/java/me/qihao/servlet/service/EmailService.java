@@ -22,6 +22,7 @@ public class EmailService implements Runnable{
         try {
             this.send(this.address);
         } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
             logger.throwing("EmailService", "run()", e);
         }
     }

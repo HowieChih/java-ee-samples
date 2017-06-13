@@ -16,12 +16,19 @@ public class URLEncodingServlet extends HttpServlet{
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("utf-8");
+        // 通过同时开启URIEncoding="UTF-8"和useBodyEncodingForURI="true"两个选项，并且使用request设置编码，会发现后者会覆盖前者对于query string的编码。
+        req.setCharacterEncoding("iso-8859-1");
         String queryString = req.getQueryString();
         System.out.println(queryString);
 
         String originalKey = req.getParameter("key");
         System.out.println(originalKey);
+        StringBuilder sb = new StringBuilder();
+        byte[] bytes = originalKey.getBytes();
+        for (byte b : bytes) {
+            sb.append(String.format("%02X ", b));
+        }
+        System.out.println(sb);
         String decodedKey = new String(originalKey.getBytes("iso-8859-1"), Charset.forName("utf-8"));
         System.out.println(decodedKey);
 
