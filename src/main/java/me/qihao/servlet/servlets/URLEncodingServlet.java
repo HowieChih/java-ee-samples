@@ -24,7 +24,7 @@ public class URLEncodingServlet extends HttpServlet{
 
         String originalKey = req.getParameter("key");
         System.out.println(originalKey);
-        String decodedKey = new String(originalKey.getBytes("utf-8"), Charset.forName("utf-8"));
+        String decodedKey = new String(originalKey.getBytes("iso-8859-1"), Charset.forName("utf-8"));
         System.out.println(decodedKey);
 
         resp.setContentType("text/html");
