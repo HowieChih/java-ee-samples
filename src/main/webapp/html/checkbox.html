@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>checkbox with binary</title>
+    <link rel="stylesheet" href="//res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css"/>
+</head>
+<body>
+    <div class="weui-cells__title">复选列表项</div>
+    <div class="weui-cells weui-cells_checkbox">
+        <label class="weui-cell weui-check__label" for="s11">
+            <div class="weui-cell__hd">
+                <input type="checkbox" value="1" class="weui-check" name="checkbox" id="s11">
+                <i class="weui-icon-checked"></i>
+            </div>
+            <div class="weui-cell__bd">
+                <p>选项一</p>
+            </div>
+        </label>
+        <label class="weui-cell weui-check__label" for="s12">
+            <div class="weui-cell__hd">
+                <input type="checkbox" value="2" class="weui-check" name="checkbox" id="s12">
+                <i class="weui-icon-checked"></i>
+            </div>
+            <div class="weui-cell__bd">
+                <p>选项二</p>
+            </div>
+        </label>
+        <label class="weui-cell weui-check__label" for="s13">
+            <div class="weui-cell__hd">
+                <input type="checkbox" value="4" class="weui-check" name="checkbox" id="s13">
+                <i class="weui-icon-checked"></i>
+            </div>
+            <div class="weui-cell__bd">
+                <p>选项三</p>
+            </div>
+        </label>
+        <div class="weui-btn-area">
+            <a class="weui-btn weui-btn_primary" href="javascript:" id="submit">提交</a>
+        </div>
+    </div>
+
+    <div class="weui-cells__title">提交结果</div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>值</p>
+            </div>
+            <div class="weui-cell__ft result">待选择</div>
+        </div>
+    </div>
+
+    <div class="weui-cells__title">结果回显</div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>值</p>
+            </div>
+            <div class="weui-cell__ft options">待选择</div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector('#submit').addEventListener('click', function () {
+            var checkedOptions = document.querySelectorAll('input[name="checkbox"]:checked');
+            if (checkedOptions.length >= 0) {
+                var result = 0;
+                for (var index in checkedOptions) {
+                    if (checkedOptions.hasOwnProperty(index)) {
+                        var value = checkedOptions[index].value;
+                        result = result | parseInt(value);
+                    }
+                }
+                document.getElementsByClassName('result')[0].innerHTML = result === 0 ? "待选择" : result;
+                
+                analysisVal(result);
+            }
+        });
+        
+        function analysisVal(result) {
+            var checkbox = document.querySelectorAll('input[name="checkbox"]');
+            var text = "";
+            for (var index in checkbox) {
+                if (checkbox.hasOwnProperty(index)) {
+                    var cbox = checkbox[index];
+                    var cboxVal = parseInt(cbox.value);
+                    if ((result & cboxVal) === cboxVal) {
+                        text += cbox.parentElement.nextElementSibling.querySelector('p').innerText + " ";
+                    }
+
+                }
+            }
+            document.getElementsByClassName('options')[0].innerHTML = result === 0 ? "待选择" : text;
+        }
+    </script>
+</body>
+</html>
