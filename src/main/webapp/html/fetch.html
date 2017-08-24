@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>fetch api</title>
+</head>
+<body>
+<a href="javascript:" id="fetch">load data</a>
+<div id="result"></div>
+<script>
+    document.getElementById('fetch').addEventListener('click', function () {
+        fetch("/fetch.json", {
+            method: 'GET'
+        }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function(data) {
+                    var resultEle = document.getElementById('result');
+                    resultEle.innerText = data.name + "\r\n" + data.age;
+                });
+            } else {
+                console.log("Looks like the response wasn't perfect, got status", response.status);
+            }
+        });
+    });
+</script>
+</body>
+</html>
