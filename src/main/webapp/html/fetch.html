@@ -5,20 +5,46 @@
     <title>fetch api</title>
 </head>
 <body>
-<a href="javascript:" id="fetch">load data</a>
+<p>
+    <a href="javascript:" id="fetchGet">load data [HTTP GET]</a>
+</p>
+<p>
+    <a href="javascript:" id="fetchPost">post data [HTTP POST]</a>
+</p>
 <div id="result"></div>
 <script>
-    document.getElementById('fetch').addEventListener('click', function () {
+    // http get
+    document.getElementById('fetchGet').addEventListener('click', function () {
         fetch("/fetch.json", {
             method: 'GET'
         }).then(function (response) {
             if (response.ok) {
                 response.json().then(function(data) {
-                    var resultEle = document.getElementById('result');
-                    resultEle.innerText = data.name + "\r\n" + data.age;
+                    let p = document.createElement('p');
+                    p.innerText = data.name + "\r\n" + data.age;
+                    document.getElementById('result').appendChild(p);
                 });
             } else {
                 console.log("Looks like the response wasn't perfect, got status", response.status);
+            }
+        });
+    });
+
+    // http post
+    document.getElementById('fetchPost').addEventListener('click', function () {
+        fetch('/fetch.json', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'firstName=Nikhil&favColor=blue&password=easytoguess'
+        }).then(function (response) {
+            if (response.ok) {
+                response.text().then(function (data) {
+                    let p = document.createElement('p');
+                    p.innerText = data;
+                    document.getElementById('result').appendChild(p);
+                });
             }
         });
     });

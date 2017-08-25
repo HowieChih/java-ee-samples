@@ -27,4 +27,17 @@ public class FetchServlet extends HttpServlet{
             out.print(result);
         }
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String firstName = req.getParameter("firstName");
+        String favColor = req.getParameter("favColor");
+        String password= req.getParameter("password");
+        System.out.printf("%s %s %s\n", firstName, favColor, password);
+
+        resp.setContentType("text/plain;charset=UTF-8");
+        try (PrintWriter out = resp.getWriter()){
+            out.println(firstName + "'s info has been saved.");
+        }
+    }
 }
