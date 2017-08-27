@@ -11,6 +11,9 @@
 <p>
     <a href="javascript:" id="fetchPost">post data [HTTP POST]</a>
 </p>
+<p>
+    <a href="javascript:" id="fetchWithMode">send request with param mode</a>
+</p>
 <div id="result"></div>
 <script>
     // http get
@@ -19,7 +22,7 @@
             method: 'GET'
         }).then(function (response) {
             if (response.ok) {
-                response.json().then(function(data) {
+                response.json().then(function (data) {
                     let p = document.createElement('p');
                     p.innerText = data.name + "\r\n" + data.age;
                     document.getElementById('result').appendChild(p);
@@ -46,6 +49,31 @@
                     document.getElementById('result').appendChild(p);
                 });
             }
+        });
+    });
+
+    /**
+     * send request with param mode
+     * mode: no-cors more details see: https://stackoverflow.com/questions/36292537/what-is-an-opaque-request-and-what-it-serves-for
+     */
+    document.getElementById('fetchWithMode').addEventListener('click', function () {
+        // same origin
+        // let url = '/fetch.json';
+
+        // not same origin, but server follow cors.
+        let url = 'https://api.readhub.me/topic?lastCursor=15641&pageSize=10';
+
+        // not same origin, server don't follow cors.
+        // let url = 'http://js.uzugou.com/libs/base64/base64.js';
+        fetch(url, {
+            method: 'GET',
+            // mode: 'same-origin'
+            // mode: 'no-cors'
+            mode: 'cors'
+        }).then(function (res) {
+            console.log("Response succeeded?", res.ok);
+        }, function (e) {
+            console.log("Please enter a same-origin URL!");
         });
     });
 </script>
