@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery .off()</title>
+</head>
+<body>
+<div id="container">
+    <p>text</p>
+    <a href="javascript:">bind click event</a>
+    <a href="javascript:">unbind click event</a>
+</div>
+
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+<script>
+    $(function ($) {
+        let $container = $('#container');
+
+        $container.on('click', 'a:eq(0)', function () {
+            $container.on('click', 'p', function () {
+                console.log('text clicked');
+            });
+            console.info("bind successfully");
+        });
+
+        $container.on('click', 'a:eq(1)', function () {
+            $container.off('click', 'p');
+            console.info("unbind successfully");
+        });
+    });
+</script>
+</body>
+</html>
