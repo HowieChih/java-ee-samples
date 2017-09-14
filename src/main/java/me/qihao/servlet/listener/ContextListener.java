@@ -1,5 +1,6 @@
 package me.qihao.servlet.listener;
 
+import com.auth0.jwt.algorithms.Algorithm;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
@@ -7,6 +8,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import java.io.UnsupportedEncodingException;
 
 /**
  * <p>Servlet Context Listener</p>
@@ -26,6 +28,15 @@ public class ContextListener implements ServletContextListener {
         // 初始化redis环境
         JedisPool jedisPool = new JedisPool(new JedisPoolConfig(), "localhost", 6379);
         context.setAttribute("jedisPool", jedisPool);
+
+        // 初始化jwt签名算法
+        try {
+            Algorithm algorithmHS = Algorithm.HMAC256("test");
+            event.getServletContext().setAttribute("jwtAlgorithm", algorithmHS);
+        } catch (UnsupportedEncodingException e) {
+            // log error
+            e.printStackTrace();
+        }
     }
 
     @Override
