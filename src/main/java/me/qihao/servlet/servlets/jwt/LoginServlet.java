@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 
 @WebServlet(name = "jwtLoginServlet", urlPatterns = "/jwt-api/login")
 public class LoginServlet extends HttpServlet {
@@ -22,8 +23,12 @@ public class LoginServlet extends HttpServlet {
         String result;
         if ("admin".equals(userName) && "123456".equals(password)) {
             Algorithm algorithmHS = (Algorithm) request.getServletContext().getAttribute("jwtAlgorithm");
-            String token = JWT.create().withIssuer("admin").sign(algorithmHS);
-            result = "{\"code\": 200, \"msg\": \"login success\", \"data\": \"" + token + "\"}";
+            String token = JWT.create()
+                    .withIssuer("admin")
+                    .withExpiresAt(new Date(System.currentTimeMillis() + 60000))
+                    .sign(algorithmHS);
+            response.setHeader("Authorization", "Bearer " + token);
+            result = "{\"code\": 200, \"msg\": \"login success\"}";
         } else {
             result = "{\"code\": 401, \"msg\": \"login failed\"}";
         }
